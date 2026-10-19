@@ -1,13 +1,12 @@
 import mongoose from "mongoose";
-import 'dotenv/config';
 
-export async function getDB() {
+export async function getDB(): Promise<void> {
   try {
-    await mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.dcqhqnc.mongodb.net/?appName=${process.env.MONGO_CLUSTER}`);
+    await mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.dcqhqnc.mongodb.net/${process.env.MONGO_DB}?appName=${process.env.MONGO_CLUSTER}`);
     console.log("You successfully connected to MongoDB!");
-    return mongoose;
   } catch (err) {
-    console.dir(err);
+    console.log(err);
   }
 }
+
 export default getDB;
