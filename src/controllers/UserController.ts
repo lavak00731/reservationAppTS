@@ -43,10 +43,10 @@ class UserController {
             return res.sendStatus(400);
         }
         const result = await this.userService.deleteUser(dni);
-        if(result.deletedCount === 0) {
+        if(result.deletedCount > 0) {
             return res.sendStatus(200);
         }
-        return res.sendStatus(400);
+        return res.sendStatus(404);
     }
 }
 
