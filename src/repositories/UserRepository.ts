@@ -13,6 +13,10 @@ class UserRepository {
     deleteUser = async (dni: string) => {
         return await User.deleteOne({dni: dni})
     }
+    updateUser = async (id: Object, user: UserInterface) => {
+        console.log('user ', user)
+        return await User.updateOne({_id: id}, {$set: user})
+    }
 }
 
 export default UserRepository;

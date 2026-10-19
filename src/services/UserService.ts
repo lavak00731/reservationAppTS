@@ -13,6 +13,9 @@ class UserService {
     deleteUser = async (dni: string) => {
         return this.userRepository.deleteUser(dni);
     }
+    updateUser = async (id: Object, user: UserInterface) => {
+        return this.userRepository.updateUser(id, user)
+    }
 }
 
 export default UserService

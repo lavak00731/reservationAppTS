@@ -34,8 +34,23 @@ class UserController {
         }
         return res.sendStatus(409);
     }
-    update = () => {
-
+    update = async (req:Request, res:Response, next:NextFunction) => {
+        const {name, lastname, email, telephone, dni, password} = req.body;
+        if( !name || !lastname || !email || !telephone || !dni  || !password ) {
+            return res.sendStatus(400);
+        }
+        if( !validateDni(dni) || !validatePhone(telephone) || !validateEmail(email) || !validatePassword(password) ) {
+            return res.sendStatus(400);
+        }
+        const user = await this.userService.getUser(dni);
+        if(user) {
+            const updatedUser = await this.userService.updateUser(user._id, {name, lastname, email, telephone, dni, password});
+            if(updatedUser.modifiedCount > 0 && updatedUser.matchedCount > 0) {
+                return res.sendStatus(200);
+            }
+            return res.sendStatus(400);
+        }
+        return res.sendStatus(404);
     }
     delete = async(req:Request, res:Response, next:NextFunction) => {
         const { dni } = req.body;
